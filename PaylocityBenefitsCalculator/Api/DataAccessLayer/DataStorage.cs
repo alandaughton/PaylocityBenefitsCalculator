@@ -147,6 +147,7 @@
                 LastName = dependent.LastName,
                 DateOfBirth = dependent.DateOfBirth,
                 EmployeeId = dependent.EmployeeId,
+                Relationship = dependent.Relationship
             };
 
             return copy;
