@@ -15,7 +15,17 @@ public class EmployeesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ApiResponse<GetEmployeeDto>>> Get(int id)
     {
-        throw new NotImplementedException();
+        var dataStorage = DataStorage.CreateDataStorage();
+        var employeeModel = dataStorage.GetEmployee(id);
+        var dtoValue = ModelToDto.Convert(employeeModel);
+
+        var result = new ApiResponse<GetEmployeeDto>
+        {
+            Data = dtoValue,
+            Success = true
+        };
+
+        return result;
     }
 
     [SwaggerOperation(Summary = "Get all employees")]
