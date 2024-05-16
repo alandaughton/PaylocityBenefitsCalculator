@@ -1,4 +1,7 @@
 ﻿-- These are the stored procedures that handle the requirements and conform to the database design.
+-- NOTE: The requirement that 'An employee may only have 1 spouse or domestic partner (not both)' is enforced here.
+--       The requirement that 'An employee may have an unlimited number of children' is also permitted here.
+--       The GUI should also enforce these constraints, but it is important that the database cannot get corrupted.
 CREATE PROCEDURE [dbo].[CreateDependent]
 	@EmployeeId int,
 	@Firstname int varchar(50),

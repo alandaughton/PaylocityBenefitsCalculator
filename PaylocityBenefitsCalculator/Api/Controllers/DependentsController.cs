@@ -1,12 +1,15 @@
 ﻿using Api.DataAccessLayer;
 using Api.Dtos.Dependent;
-using Api.Dtos.Employee;
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers;
 
+/// <summary>
+/// By running the debugger in Visual Studio, you can view the dependents via
+/// the auto-generated client.
+/// </summary>
 [ApiController]
 [Route("api/v1/[controller]")]
 public class DependentsController : ControllerBase
