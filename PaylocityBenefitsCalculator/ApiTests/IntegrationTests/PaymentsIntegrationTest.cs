@@ -1,16 +1,11 @@
-﻿using Api.Dtos.Payments;
-using Api.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace ApiTests.IntegrationTests
+﻿namespace ApiTests.IntegrationTests
 {
+    using Api.Dtos.Payments;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using Xunit;
+
     public class PaymentsIntegrationTest : IntegrationTest
     {
         [Fact]

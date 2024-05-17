@@ -1,6 +1,4 @@
-﻿using Api.Dtos.Dependent;
-
-namespace Api.Dtos.Payments
+﻿namespace Api.Dtos.Payments
 {
     public class GetPaymentsDto
     {

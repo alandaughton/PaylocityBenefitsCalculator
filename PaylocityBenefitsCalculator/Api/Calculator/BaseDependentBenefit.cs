@@ -1,7 +1,7 @@
-﻿using Api.Models;
-
-namespace Api.Calculator
+﻿namespace Api.Calculator
 {
+    using Api.Models;
+
     /// <summary>
     /// Implementation of the base dependent benefit cost.
     /// </summary>

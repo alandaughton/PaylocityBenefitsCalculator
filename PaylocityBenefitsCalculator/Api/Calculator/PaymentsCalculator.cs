@@ -1,7 +1,7 @@
-﻿using Api.Models;
-
-namespace Api.Calculator
+﻿namespace Api.Calculator
 {
+    using Api.Models;
+
     /// <summary>
     /// Calculate the payments for an employee for a year.
     /// </summary>
