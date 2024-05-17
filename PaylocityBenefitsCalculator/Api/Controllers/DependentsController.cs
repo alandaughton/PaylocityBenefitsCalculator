@@ -18,17 +18,24 @@ public class DependentsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ApiResponse<GetDependentDto>>> Get(int id)
     {
-        var dataStorage = DataStorage.CreateDataStorage();
-        var dependentModel = dataStorage.GetDependent(id);
-        var dtoValue = ModelToDto.Convert(dependentModel);
-
-        var result = new ApiResponse<GetDependentDto>
+        try
         {
-            Data = dtoValue,
-            Success = true
-        };
+            var dataStorage = DataStorage.CreateDataStorage();
+            var dependentModel = dataStorage.GetDependent(id);
+            var dtoValue = ModelToDto.Convert(dependentModel);
 
-        return result;
+            var result = new ApiResponse<GetDependentDto>
+            {
+                Data = dtoValue,
+                Success = true
+            };
+
+            return result;
+        }
+        catch (DataNotFoundException)
+        {
+            return new NotFoundResult();
+        }
     }
 
     [SwaggerOperation(Summary = "Get all dependents")]

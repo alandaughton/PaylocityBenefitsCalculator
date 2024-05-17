@@ -18,17 +18,24 @@ public class EmployeesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<ApiResponse<GetEmployeeDto>>> Get(int id)
     {
-        var dataStorage = DataStorage.CreateDataStorage();
-        var employeeModel = dataStorage.GetEmployee(id);
-        var dtoValue = ModelToDto.Convert(employeeModel);
-
-        var result = new ApiResponse<GetEmployeeDto>
+        try
         {
-            Data = dtoValue,
-            Success = true
-        };
+            var dataStorage = DataStorage.CreateDataStorage();
+            var employeeModel = dataStorage.GetEmployee(id);
+            var dtoValue = ModelToDto.Convert(employeeModel);
 
-        return result;
+            var result = new ApiResponse<GetEmployeeDto>
+            {
+                Data = dtoValue,
+                Success = true
+            };
+
+            return result;
+        }
+        catch (DataNotFoundException)
+        {
+            return new NotFoundResult();
+        }
     }
 
     [SwaggerOperation(Summary = "Get all employees")]

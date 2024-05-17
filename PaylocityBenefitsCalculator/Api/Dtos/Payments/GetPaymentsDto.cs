@@ -8,6 +8,6 @@ namespace Api.Dtos.Payments
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public decimal Salary { get; set; }
-        public ICollection<decimal> Payments { get; set; } = new List<decimal>();
+        public decimal[] Payments { get; set; } = new decimal[0];
     }
 }

@@ -105,7 +105,7 @@
                 }
             }
 
-            throw new Exception($"Unrecognized employee id {employeeId}");
+            throw new DataNotFoundException($"Unrecognized employee id {employeeId}");
         }
 
         public Dependent GetDependent(int dependentId)
@@ -121,7 +121,7 @@
                 }
             }
 
-            throw new Exception($"Unrecognized dependent id {dependentId}");
+            throw new DataNotFoundException($"Unrecognized dependent id {dependentId}");
         }
 
         private Employee CopyEmployee(Employee employee)

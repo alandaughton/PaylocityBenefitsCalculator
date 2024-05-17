@@ -7,6 +7,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Swashbuckle.AspNetCore.Annotations;
 
+    /// <summary>
+    /// By running the debugger in Visual Studio, you can view the employees and their dependents via
+    /// the auto-generated client.
+    /// </summary>
+    [ApiController]
+    [Route("api/v1/[controller]")]
     public class PaymentsController : ControllerBase
     {
         [SwaggerOperation(Summary = "Get this year's payments for an employee")]
@@ -14,8 +20,17 @@
         public async Task<ActionResult<ApiResponse<GetPaymentsDto>>> GetAll(
             [SwaggerParameter("The employee id")] int id)
         {
-            var dataStorage = DataStorage.CreateDataStorage();
-            var employeeModel = dataStorage.GetEmployee(id);
+            IDataStorage? dataStorage = null;
+            Employee? employeeModel = null;
+            try
+            {
+                dataStorage = DataStorage.CreateDataStorage();
+                employeeModel = dataStorage.GetEmployee(id);
+            }
+            catch (DataNotFoundException)
+            {
+                return new NotFoundResult();
+            }
 
             var payments = this.GetAllPayments(employeeModel);
 
@@ -24,13 +39,9 @@
                 Id = employeeModel.Id,
                 FirstName = employeeModel.FirstName,
                 LastName = employeeModel.LastName,
-                Salary = employeeModel.Salary
+                Salary = employeeModel.Salary,
+                Payments = payments.ToArray()
             };
-
-            foreach (var payment in payments)
-            {
-                dtoValue.Payments.Add(payment);
-            }
 
             var result = new ApiResponse<GetPaymentsDto>
             {
@@ -47,8 +58,22 @@
             [SwaggerParameter("The employee id")] int id,
             [SwaggerParameter("The paycheck number (1 - 26)")] int paycheck)
         {
-            var dataStorage = DataStorage.CreateDataStorage();
-            var employeeModel = dataStorage.GetEmployee(id);
+            if (paycheck < 1 || paycheck > 26)
+            {
+                return new UnprocessableEntityResult();
+            }
+
+            IDataStorage? dataStorage = null;
+            Employee? employeeModel = null;
+            try
+            {
+                dataStorage = DataStorage.CreateDataStorage();
+                employeeModel = dataStorage.GetEmployee(id);
+            }
+            catch (DataNotFoundException)
+            {
+                return new NotFoundResult();
+            }
 
             var payments = this.GetAllPayments(employeeModel);
 
@@ -57,10 +82,9 @@
                 Id = employeeModel.Id,
                 FirstName = employeeModel.FirstName,
                 LastName = employeeModel.LastName,
-                Salary = employeeModel.Salary
+                Salary = employeeModel.Salary,
+                Payments = new decimal[] { payments.ElementAt(paycheck - 1) }
             };
-
-            dtoValue.Payments.Add(payments.ElementAt(paycheck - 1));
 
             var result = new ApiResponse<GetPaymentsDto>
             {
